@@ -6,9 +6,15 @@
     <title>Home</title>
 </head>
 <body>
+
+
+
 <?php
-$date ="05-March-2-26"
+$name="Md Hasibul Bashar Polok";
+$date ="05-March-2-26";
+echo $name;
 ?>
-<h1>Today is <?=$date;?></h1>
+
+
 </body>
 </html>
