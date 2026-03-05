@@ -9,7 +9,8 @@
     <?php
     $a = array("a","b",1);
     var_dump($a);
-    
+    echo "<br>";
+    print_r($a);
     ?>
 </body>
-</html>
+</html> 
