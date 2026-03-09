@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>New Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Form</title>
 </head>
 
 <body>
 
-<form action="" method="get">
-<label for="name">Name</label>
-<input type="text" name="name" id="name">
-<input type="submit" value="Submit">
+    <form action="" method="get">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name">
+        <input type="submit" value="Submit">
 
-</form>
+    </form>
 
-<?php
+    <?php
 
-if(isset($_GET['name'])){
-    $store = $_GET['name'];
-    echo "<br>";
-    echo "Your Entered Name Is: ".$store;
-    
+    if (isset($_GET['name'])) {
+
+    if ($_GET['name'] == "") {
+        echo "<br>";
+        echo "<p style='color:red; text-align:center;'>Enter a name</p>";
+    } 
+    else {
+        $store = $_GET['name'];
+        echo "<br>";
+        echo "Your Entered Name Is: " . $store;
+    }
+
 }
 
-?>
+
+
+    ?>
 
 </body>
+
 </html>
