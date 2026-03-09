@@ -40,7 +40,7 @@ input[type="submit"]{
 }
 
 input[type="submit"]:hover{
-    background-color: #0056b3;
+    background-color: #f50d66;
 }
 
 .message{
