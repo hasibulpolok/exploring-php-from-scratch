@@ -20,8 +20,8 @@
 if(isset($_REQUEST['name'])){
     $store = $_REQUEST['name'];
     echo "<br>";
-    echo "User Name : ";
-    echo $store;
+    echo "Your Entered Name Is: ".$store;
+    
 }
 
 ?>
