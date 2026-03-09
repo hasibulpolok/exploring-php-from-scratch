@@ -17,8 +17,8 @@
 
 <?php
 
-if(isset($_REQUEST['name'])){
-    $store = $_REQUEST['name'];
+if(isset($_GET['name'])){
+    $store = $_GET['name'];
     echo "<br>";
     echo "Your Entered Name Is: ".$store;
     
