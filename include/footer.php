@@ -10,7 +10,7 @@
 <body>
     <hr>
     <footer>
-        <p>&copy; 2026 আমার ওয়েবসাইট. সর্বস্বত্ব সংরক্ষিত।</p>
+        <p>&copy; 2026 All right reserved।</p>
     </footer>
 </body>
 
