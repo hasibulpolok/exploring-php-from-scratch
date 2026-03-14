@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer</title>
-</head>
-
-<body>
-    <hr>
-    <footer>
-        <p>&copy; 2026 All right reserved।</p>
-    </footer>
-</body>
-
-</html>
-</body>
-
-</html>
+<footer>
+    <div class="container">
+        <p>&copy; 2026 Creative Web Solutions. All Rights Reserved.</p>
+        <div class="socials">
+            <a href="#">Facebook</a> |
+            <a href="#">Instagram</a> |
+            <a href="#">LinkedIn</a> |
+            <a href="#">Twitter</a>
+        </div>
+    </div>
+</footer>
