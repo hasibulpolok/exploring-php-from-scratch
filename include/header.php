@@ -1,32 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>header</title>
-</head>
-
-<body>
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My Website</title>
-    </head>
-
-    <body>
-        <header>
-            <h1>Welcome</h1>
-            <nav>
-                <a href="index.php">Home</a> |
-                <a href="#">About</a> |
-                <a href="#">Contact</a>
-            </nav>
-            <hr>
-        </header>
-    </body>
-
-    </html>
+<header>
+    <div class="container">
+        <h1 class="logo">Creative Web Solutions</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php" class="<?= basename($_SERVER['PHP_SELF'])=='index.php'?'active':'' ?>">Home</a></li>
+                <li><a href="about.php" class="<?= basename($_SERVER['PHP_SELF'])=='about.php'?'active':'' ?>">About</a></li>
+                <li><a href="services.php" class="<?= basename($_SERVER['PHP_SELF'])=='services.php'?'active':'' ?>">Services</a></li>
+                <li><a href="portfolio.php" class="<?= basename($_SERVER['PHP_SELF'])=='portfolio.php'?'active':'' ?>">Portfolio</a></li>
+                <li><a href="contact.php" class="<?= basename($_SERVER['PHP_SELF'])=='contact.php'?'active':'' ?>">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
