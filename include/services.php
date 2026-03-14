@@ -1,27 +1,24 @@
 <?php include('header.php'); ?>
-<link rel="stylesheet" href="style.css">
 
 <main>
-    <section class="hero">
-        <h1>Welcome to Creative Web Solutions</h1>
-        <p>We build beautiful, fast, and responsive websites that help your business grow.</p>
-        <a href="about.php" class="btn">Learn More</a>
-    </section>
-
     <section class="features">
         <h2>Our Services</h2>
         <div class="feature-cards">
             <div class="card">
                 <h3>Responsive Design</h3>
-                <p>Perfect display on any device.</p>
+                <p>Mobile, tablet, and desktop friendly designs.</p>
             </div>
             <div class="card">
                 <h3>Web Development</h3>
-                <p>Modern, fast, and secure websites.</p>
+                <p>Modern and secure websites using latest tech.</p>
             </div>
             <div class="card">
                 <h3>E-Commerce Solutions</h3>
-                <p>Boost your online sales with professional stores.</p>
+                <p>Professional online stores tailored to your business.</p>
+            </div>
+            <div class="card">
+                <h3>SEO & Marketing</h3>
+                <p>Reach your audience effectively with our strategies.</p>
             </div>
         </div>
     </section>
