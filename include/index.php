@@ -14,4 +14,19 @@
         <a href="#">Contact</a>
     </nav>
     <hr>
+
+    <?php
+// header include
+include 'header.php';
+?>
+
+<main>
+    <h2>মেইন কন্টেন্ট</h2>
+    <p>এইখানে আপনার ওয়েবসাইটের প্রধান তথ্য থাকবে।</p>
+</main>
+
+<?php
+// footer include
+include 'footer.php';
+?>
 </header>
