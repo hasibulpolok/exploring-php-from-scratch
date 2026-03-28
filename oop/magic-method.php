@@ -14,7 +14,10 @@ class car
         $this->name = $n;
         echo "This is a constructor method<br>";
         echo "<br>";
+            echo "<br>";
         echo "Hello, this " . $this->name = $n . " is " . $this->color = $c . "<br>";
+        echo "<br>";
+        echo "<br>";
     }
 }
 
