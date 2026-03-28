@@ -3,11 +3,16 @@ class Car{
     public $model = 'SUV';
     public $color = 'Black';
     public $name = 'BMW';
+
+    
+    function info(){
+        echo "This is a car class";
+    }
 }
 
-new Car();
 $result = new Car();
-
-$result->model;
 echo $result->model;
+echo "<br>";
+
+$result->info();
 // print_r(get_class_vars('Car'));
