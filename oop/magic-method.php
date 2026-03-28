@@ -9,10 +9,13 @@ class car
     {
         echo "This is a destructor method<br>";
     }
-    public function __construct()
+    public function __construct($n , $c)
     {
+        $this->name = $n;
         echo "This is a constructor method<br>";
+        echo "<br>";
+        echo "Hello, this " . $this->name = $n . " is " . $this->color = $c . "<br>";
     }
 }
 
-$result =new car();
+$result = new car("Toyota","Red");
