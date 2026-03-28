@@ -5,14 +5,19 @@ class Car{
     public $name = 'BMW';
 
     
-    function info(){
-        echo "This is a car class";
+    function info($c){
+        echo "This is a car class ";
+        echo '<br>';
+        $this ->color;
     }
 }
 
 $result = new Car();
-echo $result->model;
+echo $result->model; 
+echo "<br>";
+echo $result->color;
 echo "<br>";
 
-$result->info();
+$result->info("Red-Wine");
+
 // print_r(get_class_vars('Car'));
