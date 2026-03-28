@@ -8,5 +8,6 @@ class Car{
 new Car();
 $result = new Car();
 
-
-print_r(get_class_vars('Car'));
+$result->model;
+echo $result->model;
+// print_r(get_class_vars('Car'));
