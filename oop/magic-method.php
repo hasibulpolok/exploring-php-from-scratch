@@ -8,6 +8,8 @@ class car
     public function __destruct()
     {
         echo "This is a destructor method<br>";
+      
+        echo "Color was: " . $this->color . "<br>";
     }
     public function __construct($n , $c)
     {
