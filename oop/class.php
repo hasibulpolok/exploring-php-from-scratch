@@ -4,20 +4,18 @@ class Car{
     public $color = 'Black';
     public $name = 'BMW';
 
-    
     function info($c){
-        echo "This is a car class ";
-        echo '<br>';
-        $this ->color;
+        echo "This is a car class<br>";
+        echo "Color: " . $this->color . "<br>";
+        echo "Passed color: " . $c . "<br>";
     }
 }
 
 $result = new Car();
-echo $result->model; 
+
+echo $result->model;
 echo "<br>";
-echo $result->color;
+echo $result->color;   
 echo "<br>";
 
 $result->info("Red-Wine");
-
-// print_r(get_class_vars('Car'));
