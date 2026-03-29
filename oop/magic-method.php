@@ -24,3 +24,4 @@ class car
 }
 
 $result = new car("Toyota","Red");
+
