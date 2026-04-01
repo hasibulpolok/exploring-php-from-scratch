@@ -1,11 +1,13 @@
 <?php
-$file = "first.txt";
-$content = "Hello, this is written to a file!";
+$newfile = fopen("store.txt", "w");
+$text = "New text file created by php.";
+fwrite($newfile, $text);
+fclose($newfile);
 
-file_put_contents($file, $content);
+echo "<br><br>";
 
-echo "File written successfully!";
-
-
-
+// read
+$read = fopen("store.txt", "r");
+echo fread($read, filesize("store.txt"));
+fclose($read);
 ?>
