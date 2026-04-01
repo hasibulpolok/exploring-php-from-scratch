@@ -7,4 +7,7 @@ echo fread($result,filesize('first.txt'));
 fclose($result);
 echo "<br><br>";
 echo readfile("data.txt");
+
+ $file_get = file_get_contents("fileget.txt") or die("File not found!");
+echo $file_get;
 ?>
