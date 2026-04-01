@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="email"], input[type="password"], select { width: 100%; padding: 8px; }
+        .radio-group { margin: 10px 0; }
+        button { margin-right: 10px; padding: 10px 20px; cursor: pointer; }
+        .error { color: red; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h2>Inpuuted</h2>
+    <form id="registrationForm" onsubmit="return validateForm()">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <span class="error" id="nameError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <span class="error" id="emailError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <span class="error" id="passwordError"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Gender:</label>
+            <div class="radio-group">
+                <input type="radio" name="gender" value="Male" required> Male
+                <input type="radio" name="gender" value="Female" required> Female
+            </div>
+            <span class="error" id="genderError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="course">Course:</label>
+            <select id="course" name="course" required>
+                <option value="">Select Course</option>
+                <option value="Java">Java</option>
+                <option value="Python">Python</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Database">Database</option>
+            </select>
+            <span class="error" id="courseError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="education">Education:</label>
+            <select id="education" name="education" required>
+                <option value="">Select Education</option>
+                <option value="High School">High School</option>
+                <option value="Bachelor">Bachelor</option>
+                <option value="Master">Master</option>
+            </select>
+            <span class="error" id="educationError"></span>
+        </div>
+
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            clearErrors();
+            let isValid = true;
+
+            const name = document.getElementById("name").value.trim();
+            if (name === "") {
+                document.getElementById("nameError").textContent = "Name is required";
+                isValid = false;
+            }
+
+            const email = document.getElementById("email").value.trim();
+            if (email === "" || !email.includes("@")) {
+                document.getElementById("emailError").textContent = "Valid email is required";
+                isValid = false;
+            }
+
+            const password = document.getElementById("password").value;
+            if (password === "" || password.length < 6) {
+                document.getElementById("passwordError").textContent = "Password must be at least 6 characters";
+                isValid = false;
+            }
+
+            if (!document.querySelector('input[name="gender"]:checked')) {
+                document.getElementById("genderError").textContent = "Gender is required";
+                isValid = false;
+            }
+
+            if (document.getElementById("course").value === "") {
+                document.getElementById("courseError").textContent = "Course is required";
+                isValid = false;
+            }
+
+            if (document.getElementById("education").value === "") {
+                document.getElementById("educationError").textContent = "Education is required";
+                isValid = false;
+            }
+
+            if (isValid) {
+                openWindow();
+            }
+            return false;
+        }
+
+        function clearErrors() {
+            document.querySelectorAll(".error").forEach(el => el.textContent = "");
+        }
+
+        function openWindow() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const course = document.getElementById("course").value;
+            const education = document.getElementById("education").value;
+
+            const content = `
+                <html><head><title>Form Data</title><style>body{font-family:Arial;margin:20px;}</style></head>
+                <body><h2>Submitted Form Data</h2>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Gender:</strong> ${gender}</p>
+                <p><strong>Course:</strong> ${course}</p>
+                <p><strong>Education:</strong> ${education}</p>
+                </body></html>
+            `;
+            
+            const newWindow = window.open("", "FormData", "width=500,height=400");
+            newWindow.document.write(content);
+        }
+    </script>
+</body>
+</html>

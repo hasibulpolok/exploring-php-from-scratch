@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<title>ইমেল ভ্যালিডেশন (JS)</title>
+<style>
+    .valid { color: green; }
+    .invalid { color: red; }
+</style>
+</head>
+<body>
+
+<h2>ইমেল লিখুন:</h2>
+<input type="text" id="emailInput" placeholder="your email">
+<p id="message"></p>
+
+<script>
+const emailInput = document.getElementById('emailInput');
+const message = document.getElementById('message');
+
+function validateEmailWithoutRegex(email) {
+    // @ আছে কিনা চেক করা
+    if(!email.includes('@')) return false;
+
+    // @ কে split করা
+    const parts = email.split('@');
+
+    // শুধু ২টি অংশ থাকা উচিত
+    if(parts.length !== 2) return false;
+
+    const local = parts[0];
+    const domain = parts[1];
+
+    // লোকাল এবং ডোমেইন খালি নয়
+    if(local.length === 0 || domain.length === 0) return false;
+
+    // ডোমেইনে কমপক্ষে একটি '.' থাকা উচিত
+    if(!domain.includes('.')) return false;
+
+    // ডোমেইনের '.' প্রথম বা শেষ এ থাকতে পারবে না
+    if(domain.startsWith('.') || domain.endsWith('.')) return false;
+
+    return true;
+}
+
+emailInput.addEventListener('input', () => {
+    const email = emailInput.value.trim();
+
+    if(email === "") {
+        message.textContent = "";
+    } else if(validateEmailWithoutRegex(email)) {
+        message.textContent = "ইমেল ঠিক আছে ✅";
+        message.className = "valid";
+    } else {
+        message.textContent = "ইমেল ভুল ❌";
+        message.className = "invalid";
+    }
+});
+</script>
+
+</body>
+</html>

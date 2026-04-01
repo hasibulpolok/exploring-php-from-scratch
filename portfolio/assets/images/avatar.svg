@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a66c2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#004182;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#cce4f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a8d4f5;stop-opacity:1" />
+    </linearGradient>
+    <clipPath id="circle">
+      <circle cx="100" cy="100" r="100"/>
+    </clipPath>
+  </defs>
+  <!-- Background -->
+  <circle cx="100" cy="100" r="100" fill="url(#bgGrad)"/>
+  <!-- Body / shirt -->
+  <ellipse cx="100" cy="185" rx="65" ry="45" fill="url(#bodyGrad)" clip-path="url(#circle)"/>
+  <!-- Neck -->
+  <rect x="88" y="120" width="24" height="30" rx="8" fill="#f5cba7" clip-path="url(#circle)"/>
+  <!-- Head -->
+  <circle cx="100" cy="108" r="40" fill="#f5cba7"/>
+  <!-- Hair -->
+  <path d="M62 98 Q65 65 100 62 Q135 65 138 98 Q130 75 100 72 Q70 75 62 98Z" fill="#2c1810"/>
+  <!-- Eyes -->
+  <circle cx="87" cy="104" r="4.5" fill="#2c1810"/>
+  <circle cx="113" cy="104" r="4.5" fill="#2c1810"/>
+  <circle cx="88.5" cy="102.5" r="1.5" fill="#fff" opacity="0.7"/>
+  <circle cx="114.5" cy="102.5" r="1.5" fill="#fff" opacity="0.7"/>
+  <!-- Eyebrows -->
+  <path d="M82 96 Q87 93 93 95" stroke="#2c1810" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M107 95 Q113 93 118 96" stroke="#2c1810" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M99 107 Q97 114 100 117 Q103 114 101 107" stroke="#d4956a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Smile -->
+  <path d="M90 122 Q100 130 110 122" stroke="#c0754a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Shirt collar detail -->
+  <path d="M88 148 L80 165 L100 160 L120 165 L112 148" fill="#0a66c2" clip-path="url(#circle)"/>
+</svg>
