@@ -1,20 +1,17 @@
 <?php
 
 $person = [
-    ['id' => 1, 'name' => 'John', 'email' => 'john@example.com', 'phone' => '555-0101', 'city' => 'New York'],
-    ['id' => 2, 'name' => 'Jane', 'email' => 'jane@example.com', 'phone' => '555-0102', 'city' => 'Los Angeles'],
-    ['id' => 3, 'name' => 'Bob', 'email' => 'bob@example.com', 'phone' => '555-0103', 'city' => 'Chicago'],
-    ['id' => 4, 'name' => 'Alice', 'email' => 'alice@example.com', 'phone' => '555-0104', 'city' => 'Houston'],
-    ['id' => 5, 'name' => 'Charlie', 'email' => 'charlie@example.com', 'phone' => '555-0105', 'city' => 'Phoenix'],
-    ['id' => 6, 'name' => 'Diana', 'email' => 'diana@example.com', 'phone' => '555-0106', 'city' => 'Philadelphia'],
-    ['id' => 7, 'name' => 'Eve', 'email' => 'eve@example.com', 'phone' => '555-0107', 'city' => 'San Antonio'],
-    ['id' => 8, 'name' => 'Frank', 'email' => 'frank@example.com', 'phone' => '555-0108', 'city' => 'San Diego'],
-    ['id' => 9, 'name' => 'Grace', 'email' => 'grace@example.com', 'phone' => '555-0109', 'city' => 'Dallas'],
-    ['id' => 10, 'name' => 'Henry', 'email' => 'henry@example.com', 'phone' => '555-0110', 'city' => 'San Jose']
+    ['id' => 1, 'name' => 'Md Hasibul Bashar Polok', 'age' => 27, 'email' => 'hasibulpolok.bdn@gmail.com', 'phone' => '0176596735', 'city' => 'Dhaka'],
+    ['id' => 2, 'name' => 'Saurav Hossain', 'age' => 26, 'email' => 'saurav@gmail.com', 'phone' => '01823456789', 'city' => 'Gazipur'],
+    ['id' => 3, 'name' => 'Mustafijur Rahman', 'age' => 25, 'email' => 'mustafijur@gmail.com', 'phone' => '01934567890', 'city' => 'Khulna'],
+    ['id' => 4, 'name' => 'Tanvir Ahmed', 'age' => 28, 'email' => 'tanvir@gmail.com', 'phone' => '01645678901', 'city' => 'Chittagong'],
+    ['id' => 5, 'name' => 'Nusrat Jahan', 'age' => 24, 'email' => 'nusrat@gmail.com', 'phone' => '01556789012', 'city' => 'Rajshahi'],
+    ['id' => 6, 'name' => 'Rakib Hasan', 'age' => 29, 'email' => 'rakib@gmail.com', 'phone' => '01367890123', 'city' => 'Sylhet'],
+    ['id' => 7, 'name' => 'Farhana Akter', 'age' => 23, 'email' => 'farhana@gmail.com', 'phone' => '01778901234', 'city' => 'Barisal'],
+    ['id' => 8, 'name' => 'Imran Khan', 'age' => 30, 'email' => 'imran@gmail.com', 'phone' => '01889012345', 'city' => 'Comilla'],
+    ['id' => 9, 'name' => 'Jannat Ara', 'age' => 22, 'email' => 'jannat@gmail.com', 'phone' => '01990123456', 'city' => 'Rangpur'],
+    ['id' => 10, 'name' => 'Shakib Al Hasan', 'age' => 35, 'email' => 'shakib@gmail.com', 'phone' => '01601234567', 'city' => 'Magura']
 ];
 
-foreach ($person as list($id, $name, $age)) {
-    echo "ID: $id, Name: $name, Age: $age";
-}
 
 ?>
