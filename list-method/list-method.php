@@ -1,17 +1,20 @@
 <?php
 
 $person = [
-    ['id' => 1, 'name' => 'Md Hasibul Bashar Polok', 'age' => 27, 'email' => 'hasibulpolok.bdn@gmail.com', 'phone' => '0176596735', 'city' => 'Dhaka'],
-    ['id' => 2, 'name' => 'Saurav Hossain', 'age' => 26, 'email' => 'saurav@gmail.com', 'phone' => '01823456789', 'city' => 'Gazipur'],
-    ['id' => 3, 'name' => 'Mustafijur Rahman', 'age' => 25, 'email' => 'mustafijur@gmail.com', 'phone' => '01934567890', 'city' => 'Khulna'],
-    ['id' => 4, 'name' => 'Tanvir Ahmed', 'age' => 28, 'email' => 'tanvir@gmail.com', 'phone' => '01645678901', 'city' => 'Chittagong'],
-    ['id' => 5, 'name' => 'Nusrat Jahan', 'age' => 24, 'email' => 'nusrat@gmail.com', 'phone' => '01556789012', 'city' => 'Rajshahi'],
-    ['id' => 6, 'name' => 'Rakib Hasan', 'age' => 29, 'email' => 'rakib@gmail.com', 'phone' => '01367890123', 'city' => 'Sylhet'],
-    ['id' => 7, 'name' => 'Farhana Akter', 'age' => 23, 'email' => 'farhana@gmail.com', 'phone' => '01778901234', 'city' => 'Barisal'],
-    ['id' => 8, 'name' => 'Imran Khan', 'age' => 30, 'email' => 'imran@gmail.com', 'phone' => '01889012345', 'city' => 'Comilla'],
-    ['id' => 9, 'name' => 'Jannat Ara', 'age' => 22, 'email' => 'jannat@gmail.com', 'phone' => '01990123456', 'city' => 'Rangpur'],
-    ['id' => 10, 'name' => 'Shakib Al Hasan', 'age' => 35, 'email' => 'shakib@gmail.com', 'phone' => '01601234567', 'city' => 'Magura']
+    [1, 'Md Hasibul Bashar Polok', 27, 'hasibulpolok.bdn@gmail.com', '01765967395', 'Dhaka'],
+    [2, 'Saurav Hossain', 26, 'saurav@gmail.com', '01823456789', 'Gazipur'],
+    [3, 'Mustafijur Rahman', 25, 'mustafijur@gmail.com', '01934567890', 'Khulna'],
+    [4, 'Tanvir Ahmed', 28, 'tanvir@gmail.com', '01645678901', 'Chittagong'],
+    [5, 'Nusrat Jahan', 24, 'nusrat@gmail.com', '01556789012', 'Rajshahi'],
+    [6, 'Rakib Hasan', 29, 'rakib@gmail.com', '01367890123', 'Sylhet'],
+    [7, 'Farhana Akter', 23, 'farhana@gmail.com', '01778901234', 'Barisal'],
+    [8, 'Imran Khan', 30, 'imran@gmail.com', '01889012345', 'Comilla'],
+    [9, 'Jannat Ara', 22, 'jannat@gmail.com', '01990123456', 'Rangpur'],
+    [10, 'Shakib Al Hasan', 35, 'shakib@gmail.com', '01601234567', 'Magura']
 ];
 
+foreach ($person as list($id, $name, $age, $email, $phone, $city)) {
+    echo "$id | $name | $age | $email | $phone | $city <br>";
+}
 
 ?>
