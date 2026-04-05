@@ -34,8 +34,8 @@ class User {
 
     public function display() {
         echo "<h3>Submitted Data:</h3>";
-        echo "Name: " . $this->name . "<br>";
         echo "ID: " . $this->id . "<br>";
+        echo "Name: " . $this->name . "<br>";
         echo "Address: " . $this->address . "<br>";
         echo "Contact: " . $this->contact . "<br>";
     }
