@@ -13,9 +13,9 @@ $result = new user1();
 $result2 = new user2();
 $result3 = new user3();
 
-$result->userInfo();
-$result2->userInfo();
-$result3->userInfo();
+$result->userInfo(); echo "<br>";
+$result2->userInfo();echo "<br>";
+$result3->userInfo();echo "<br>";
 
 
 ?>
