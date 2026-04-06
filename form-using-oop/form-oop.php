@@ -127,7 +127,7 @@
             $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             foreach ($lines as $line) {
                 $parts = explode("|", $line);
-                if (count($parts) === 4) {  // Only process valid lines
+                if (count($parts) === 4) {  
                     list($id, $name, $address, $contact) = $parts;
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($id) . "</td>";
