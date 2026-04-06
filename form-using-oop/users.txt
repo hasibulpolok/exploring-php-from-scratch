@@ -1,10 +1,8 @@
-Name: Watch
-ID: 1295443
-Address: Medical Para,Purbo Boragari,Domar Nilphamari 5340
-Contact: 12121
---------------------------
-Name: POLOK
-ID: 1295545
-Address: DHAKA
-Contact: 01765967395
---------------------------
+
+12955443|Ridoy Boss|Patuakhali|01618049034
+1295545|MD HASIBUL BASHAR POLOK|West Rampura Dhaka|01765967395
+125554|Watch|Medical Para,Purbo Boragari,Domar Nilphamari 5340|12121
+125554|Watch|Medical Para,Purbo Boragari,Domar Nilphamari 5340|12121
+125554|Watch|Medical Para,Purbo Boragari,Domar Nilphamari 5340|12121
+125554|Watch|Medical Para,Purbo Boragari,Domar Nilphamari 5340|12121
+125554|Watch|Medical Para,Purbo Boragari,Domar Nilphamari 5340|12121
