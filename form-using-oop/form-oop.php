@@ -103,7 +103,7 @@
         }
     }
 
-    // Handle form submission
+
     if (isset($_POST['submit'])) {
         $name = htmlspecialchars($_POST['name']);
         $id = htmlspecialchars($_POST['id']);
@@ -115,7 +115,6 @@
         $user->display();
     }
 
-    // Function to display all saved users safely
     function displaySavedUsers()
     {
         $file = "users.txt";
@@ -145,7 +144,7 @@
         }
     }
 
-    // Display all saved users
+
     displaySavedUsers();
 
 
