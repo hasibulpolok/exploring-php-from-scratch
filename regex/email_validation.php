@@ -1,29 +1,4 @@
 <?php
-$data = "A1b2"; 
-$pattern = "/^[a-zA-Z0-9]{3,8}$/";
-
-echo preg_match_all($pattern, $data) ? "True " : "False ";""
-?>
-
-
-<?php
-$numbers = [
-    "01712345678",
-    "01898765432",
-    "0123456789",
-    "019123456789",
-    "01712345abc"
-];
-
-$pattern = "/^01[3-9][0-9]{8}$/";
-
-foreach ($numbers as $num) {
-    echo $num . " → " . (preg_match_all($pattern, $num) ? "Valid ✅" : "Invalid ❌") . "\n";
-}
-?>
-
-
-<?php
 $emails = [
     "user@example.com",
     "invalid.email",
