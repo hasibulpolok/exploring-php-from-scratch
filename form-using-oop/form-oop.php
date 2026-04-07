@@ -49,22 +49,22 @@
     <form method="POST" class="form-container">
         <div class="form-group">
             <label>ID:</label>
-            <input type="text" name="id" required>
+            <input type="text" name="id" require>
         </div>
 
         <div class="form-group">
             <label>Name:</label>
-            <input type="text" name="name" required>
+            <input type="text" name="name" require >
         </div>
 
         <div class="form-group">
             <label>Address:</label>
-            <input type="text" name="address" required>
+            <input type="text" name="address"require>
         </div>
 
         <div class="form-group">
             <label>Contact:</label>
-            <input type="text" name="contact" required>
+            <input type="text" name="contact" require >
         </div>
 
         <input type="submit" name="submit" value="Submit">
@@ -140,7 +140,7 @@
 
             echo "</table>";
         } else {
-            echo "<h3>No saved users yet.</h3>";
+            echo "<h3>No Data.</h3>";
         }
     }
 
