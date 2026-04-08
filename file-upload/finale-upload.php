@@ -9,23 +9,33 @@
 
 <body>
 
-    <form action="" method="post" enctype="multipart/form-data">
-        <input type="file" name="myfile">
-        <input type="submit" value="Upload" name="submitbtn">
+<form action="" method="post" enctype="multipart/form-data">
+    <input type="file" name="myfile">
+    <input type="submit" value="Upload" name="submitbtn">
+</form>
 
-    </form>
+<?php
+if (isset($_POST['submitbtn'])) {
 
-    <?php
-    if (isset($_POST['submitbtn'])) {
-        $filename = $_FILES['myfile']['name'];
-        $tmp = $_FILES['myfile']['tmp_name'];
-        $location = "uploads/";
-        move_uploaded_file($tmp, $location . $filename);
+    $fileName = $_FILES['myfile']['name'];
+    $fileLocation = $_FILES['myfile']['tmp_name'];
+    $typ = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+    $size = $_FILES['myfile']['size'];
+    $location = "uploads/";
+
+    if ($size <= 409600) {
+        if ($typ === "jpg" || $typ === "png") {
+            move_uploaded_file($fileLocation, $location . $fileName);
+            echo "<br>";
+            echo "<img src='" . $location . $fileName . "' alt='image' width='400px'>";
+        } else {
+            echo "Only JPG and PNG allowed!";
+        }
+    } else {
+        echo "File size must be less than 400KB";
     }
-
-    ?>
-
+}
+?>
 
 </body>
-
 </html>
