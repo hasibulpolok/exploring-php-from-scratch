@@ -20,10 +20,10 @@ if (isset($_POST['submitbtn'])) {
     $fileName = $_FILES['myfile']['name'];
     $fileLocation = $_FILES['myfile']['tmp_name'];
     $typ = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-    $size = $_FILES['myfile']['size'];
+   $size = $_FILES['myfile']['size'] / 1024; 
     $location = "uploads/";
 
-    if ($size <= 409600) {
+    if ($size <= 400) {
         if ($typ === "jpg" || $typ === "png") {
             move_uploaded_file($fileLocation, $location . $fileName);
             echo "<br>";
