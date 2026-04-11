@@ -30,6 +30,25 @@
         <input type="password" name="password" id="password">
         <input type="submit" name="login" Value=Login>
     </form>
+
+
+    <?php
+
+    if (isset($_POST['login'])) {
+        $user = $_POST['username'];
+        $password = $_POST['password'];
+
+        if ($user === 'admin' && $password === '1234') {
+            echo "Successfully logged in";
+            header('location:main.php');
+        } else {
+            echo "Wrong username or password";
+            
+        }
+    }
+
+
+    ?>
 </body>
 
 </html>
