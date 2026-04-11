@@ -12,6 +12,24 @@
     </style>
 </head>
 <body>
-    <h1>Good Morning , Welcome Admin</h1>
+
+<?php
+date_default_timezone_set("Asia/Dhaka");
+
+$currentHour = date("H");
+
+if ($currentHour >= 5 && $currentHour < 12) {
+    $greeting = "Good Morning";
+} elseif ($currentHour >= 12 && $currentHour < 17) {
+    $greeting = "Good Afternoon";
+} elseif ($currentHour >= 17 && $currentHour < 21) {
+    $greeting = "Good Evening";
+} else {
+    $greeting = "Good Night";
+}
+?>
+
+<h1><?php echo $greeting; ?>,  Admin</h1>
+
 </body>
 </html>
