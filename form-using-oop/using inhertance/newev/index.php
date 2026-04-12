@@ -1,42 +1,46 @@
 <?php
 include "class.php";
 
-
 if (isset($_POST["submit"])) {
-    $s = new Student($_POST["name"], $_POST["id"], $_POST["address"]);
-    $s->format();
+    $name = $_POST["name"];
+    $id = $_POST["id"];
+    $address = $_POST["address"];
+
+    $student = new Student($name, $id, $address);
+    $student->saveToFile();
 }
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple System</title>
+    <title>Student System</title>
+
     <style>
         body {
             font-family: Arial;
             text-align: center;
         }
 
-        .form-container {
+        .form-box {
             width: 350px;
             margin: 30px auto;
             border: 1px solid black;
             padding: 20px;
         }
 
-        .form-group {
+        .form-row {
             display: flex;
             justify-content: space-between;
             margin: 10px 0;
         }
 
-        .form-group label {
+        .form-row label {
             width: 30%;
             text-align: left;
         }
 
-        .form-group input {
+        .form-row input {
             width: 65%;
             padding: 5px;
         }
@@ -58,45 +62,44 @@ if (isset($_POST["submit"])) {
         }
     </style>
 </head>
+
 <body>
 
 <h2>Student Form</h2>
 
-<div class="form-container">
-<form method="post">
+<div class="form-box">
+    <form method="post">
 
-    <div class="form-group">
-        <label>Name:</label>
-        <input type="text" name="name" required>
-    </div>
+        <div class="form-row">
+            <label>Name:</label>
+            <input type="text" name="name" required>
+        </div>
 
-    <div class="form-group">
-        <label>ID:</label>
-        <input type="text" name="id" required>
-    </div>
+        <div class="form-row">
+            <label>ID:</label>
+            <input type="text" name="id" required>
+        </div>
 
-    <div class="form-group">
-        <label>Address:</label>
-        <input type="text" name="address" required>
-    </div>
+        <div class="form-row">
+            <label>Address:</label>
+            <input type="text" name="address" required>
+        </div>
 
-    <button name="submit">Save</button>
+        <button name="submit">Save</button>
 
-</form>
+    </form>
 </div>
 
 <table>
-<tr>
-    <th>Name</th>
-    <th>ID</th>
-    <th>Address</th>
-</tr>
+    <tr>
+        <th>Name</th>
+        <th>ID</th>
+        <th>Address</th>
+    </tr>
 
-<?php 
-
-Student::display();
-?>
-
+    <?php
+    Student::showAllStudents();
+    ?>
 </table>
 
 </body>
