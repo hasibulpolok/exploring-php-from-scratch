@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polok Book Collection — Project Explainer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Hind+Siliguri:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --burg: #7b2d3e;
+    --burg-light: #a0435a;
+    --gold: #c9a84c;
+    --gold-muted: #e8d5a0;
+    --ink: #1c1410;
+    --muted: #7a6a5a;
+    --bg: #faf7f2;
+    --bg2: #f3ede3;
+    --bg3: #ece4d5;
+    --border: #ddd4c0;
+    --green: #2d6a4f;
+    --green-bg: #edf7f1;
+    --warn: #b45309;
+    --warn-bg: #fef9ec;
+    --error-bg: #fdf0f0;
+    --error: #991b1b;
+    --success-bg: #ecfdf5;
+    --code-bg: #1e1a16;
+    --code-fg: #e8dcc8;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(100,60,30,.10);
+    --shadow-sm: 0 2px 8px rgba(100,60,30,.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER BANNER ── */
+  .hero {
+    background: linear-gradient(135deg, var(--burg) 0%, #4a1525 100%);
+    padding: 36px 32px 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '📚';
+    position: absolute; right: 28px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 80px; opacity: .13;
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(201,168,76,.18);
+    border: 1px solid rgba(201,168,76,.35);
+    color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: .1em;
+    padding: 3px 10px; border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    color: #fff;
+    font-size: clamp(20px, 4vw, 30px);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .hero-sub {
+    color: rgba(255,255,255,.65);
+    font-size: 13px;
+    font-family: 'Hind Siliguri', sans-serif;
+  }
+
+  /* ── NAV ── */
+  .nav-wrap {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    position: sticky; top: 0; z-index: 50;
+    display: flex; gap: 6px; flex-wrap: wrap;
+    box-shadow: var(--shadow-sm);
+  }
+  .pill {
+    padding: 6px 14px; font-size: 12px; font-weight: 500;
+    border-radius: 20px; border: 1px solid var(--border);
+    background: var(--bg2);
+    color: var(--muted); cursor: pointer;
+    transition: all .15s; white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .pill.active { background: var(--burg); color: #fff; border-color: var(--burg); }
+  .pill:hover:not(.active) { border-color: var(--burg); color: var(--burg); background: #fff; }
+
+  /* ── CONTENT AREA ── */
+  .content { padding: 28px 24px 60px; max-width: 820px; margin: 0 auto; }
+
+  .section { display: none; animation: fadeUp .25s ease; }
+  .section.visible { display: block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── STEP HEADER ── */
+  .step-header { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--burg); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 600; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(123,45,62,.3);
+  }
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--burg); line-height: 1.2;
+  }
+  .step-sub {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 14px; color: var(--muted);
+    margin: 4px 0 20px 50px; line-height: 1.7;
+  }
+
+  /* ── BILINGUAL LABEL ── */
+  .bilabel {
+    display: flex; align-items: baseline; gap: 8px; margin: 20px 0 6px;
+  }
+  .bilabel-en {
+    font-size: 11px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .1em;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .bilabel-bn {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-size: 12px; color: var(--gold); font-weight: 500;
+  }
+  .bilabel-divider { color: var(--border); font-size: 14px; }
+
+  /* ── CODE BLOCK ── */
+  .code-block {
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; line-height: 1.75;
+    color: var(--code-fg); overflow-x: auto;
+    white-space: pre; margin: 0 0 18px;
+    border: 1px solid rgba(255,255,255,.05);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  .hl  { color: #e8c47a; }       /* gold highlight */
+  .kw  { color: #82aaff; }       /* keyword */
+  .str { color: #c3e88d; }       /* string */
+  .cmt { color: #546e7a; font-style: italic; }  /* comment */
+  .fn  { color: #89ddff; }       /* function */
+
+  /* ── BOXES ── */
+  .info-box, .warn-box, .fix-box {
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 14px 18px; margin-bottom: 16px;
+    font-size: 13.5px; line-height: 1.7;
+    font-family: 'Hind Siliguri', sans-serif;
+  }
+  .info-box { border-left: 3px solid var(--burg); background: #fdf5f6; }
+  .info-box strong { color: var(--burg); }
+  .warn-box { border-left: 3px solid var(--warn); background: var(--warn-bg); }
+  .warn-box strong { color: var(--warn); }
+  .fix-box  { border-left: 3px solid var(--green); background: var(--success-bg); }
+  .fix-box strong { color: var(--green); }
+
+  .info-box code, .warn-box code, .fix-box code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; background: rgba(0,0,0,.06);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ── FILE CHIPS ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .file-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 6px;
+    background: var(--bg2); border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    color: var(--ink);
+  }
+  .file-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+  .flow-box {
+    padding: 8px 14px; border-radius: 8px;
+    background: var(--bg2); border: 1px solid var(--border);
+    font-size: 12.5px; font-weight: 500; color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .flow-box.hi { border-color: var(--burg); color: var(--burg); background: #fdf5f6; }
+  .flow-arrow { color: var(--gold); font-size: 16px; }
+
+  /* ── COMPARE GRID ── */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+  .compare-card {
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 14px; background: var(--bg);
+  }
+  .compare-card.bad  { border-color: rgba(220,38,38,.2); }
+  .compare-card.good { border-color: rgba(34,197,94,.2); }
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 4px;
+    font-size: 11px; font-weight: 600; margin-bottom: 10px;
+    font-family: 'Hind Siliguri', sans-serif;
+  }
+  .badge-bad  { background: #fef2f2; color: #b91c1c; }
+  .badge-good { background: #f0fdf4; color: #15803d; }
+  .compare-card .code-block { margin: 0; font-size: 11.5px; }
+
+  /* ── DATA FORMAT CARD ── */
+  .data-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px;
+  }
+  .data-card-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--burg); font-weight: 500; margin-bottom: 8px;
+  }
+  .data-row {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    line-height: 2;
+  }
+  .data-key { color: var(--gold); font-weight: 500; }
+  .data-sep { color: var(--muted); }
+  .data-val { color: var(--ink); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  /* ── BUG SECTION ── */
+  .bug-entry { margin-bottom: 28px; }
+  .bug-num {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 10px;
+  }
+  .bug-badge {
+    background: var(--warn-bg); border: 1px solid rgba(180,83,9,.2);
+    color: var(--warn); font-size: 11px; font-weight: 600;
+    padding: 2px 10px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .bug-title {
+    font-weight: 600; font-size: 14px; color: var(--ink);
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* ── OVERVIEW DATA TABLE ── */
+  .overview-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 20px;
+  }
+  .overview-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px;
+  }
+  .overview-card-icon { font-size: 22px; margin-bottom: 6px; }
+  .overview-card-label {
+    font-size: 11px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .08em; margin-bottom: 3px;
+  }
+  .overview-card-val {
+    font-size: 13px; color: var(--ink); font-weight: 500;
+    font-family: 'Hind Siliguri', sans-serif;
+    line-height: 1.5;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 560px) {
+    .content { padding: 20px 16px 50px; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .overview-grid { grid-template-columns: 1fr; }
+    .hero { padding: 24px 20px; }
+    .hero::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO BANNER -->
+<div class="hero">
+  <div class="hero-tag">PHP · TXT · Session Auth</div>
+  <h1>Polok's Book Collection</h1>
+  <div class="hero-sub">Project explainer — বাংলা ও English উভয় ভাষায় | Full project walkthrough</div>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="nav-wrap" id="nav">
+  <button class="pill active" onclick="show('overview')">📋 Overview</button>
+  <button class="pill" onclick="show('style')">1 · Style</button>
+  <button class="pill" onclick="show('register')">2 · Register</button>
+  <button class="pill" onclick="show('login')">3 · Login</button>
+  <button class="pill" onclick="show('header')">4 · Header</button>
+  <button class="pill" onclick="show('addbook')">5 · Add Book</button>
+  <button class="pill" onclick="show('library')">6 · Library</button>
+  <button class="pill" onclick="show('manage')">7 · Manage</button>
+  <button class="pill" onclick="show('bugs')">🐛 Bugs Fixed</button>
+</nav>
+
+<div class="content">
+
+<!-- ══════════════ OVERVIEW ══════════════ -->
+<div class="section visible" id="s-overview">
+  <div class="step-header">
+    <div class="step-num">📚</div>
+    <div class="step-title">Polok Book Collection — Full Project Overview</div>
+  </div>
+  <p class="step-sub">PHP + Text file দিয়ে তৈরি একটি personal book library management system · A personal book library built without any database</p>
+
+  <div class="info-box">
+    <strong>এই project কীভাবে কাজ করে? / How does it work?</strong><br>
+    এখানে কোনো MySQL বা database নেই। সমস্ত data দুটো plain text file এ pipe (<code>|</code>) দিয়ে আলাদা করে সংরক্ষিত হয়।
+    PHP session দিয়ে login ও logout manage করা হয়।<br><br>
+    <em>No database is used. All data is stored in two plain text files, with fields separated by a pipe (<code>|</code>) character. Login and logout are managed using PHP sessions.</em>
+  </div>
+
+  <div class="overview-grid">
+    <div class="overview-card">
+      <div class="overview-card-icon">🗄️</div>
+      <div class="overview-card-label">Data Storage</div>
+      <div class="overview-card-val">Plain text files (<code>user.txt</code>, <code>books_info.txt</code>)<br><em>কোনো database নেই</em></div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-card-icon">🔐</div>
+      <div class="overview-card-label">Authentication</div>
+      <div class="overview-card-val">PHP session-based login<br><em>Session দিয়ে user চেনা হয়</em></div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-card-icon">📄</div>
+      <div class="overview-card-label">Backend Language</div>
+      <div class="overview-card-val">PHP (server-side scripting)<br><em>PHP দিয়ে সব logic লেখা</em></div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-card-icon">🖼️</div>
+      <div class="overview-card-label">Image Upload</div>
+      <div class="overview-card-val">Cover images stored in <code>covers/</code> folder<br><em>Book cover ছবি আলাদা folder এ</em></div>
+    </div>
+  </div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">File structure</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">ফাইল কাঠামো</span>
+  </div>
+  <div class="chips">
+    <span class="file-chip"><span class="file-dot" style="background:#569cd6"></span>style.php</span>
+    <span class="file-chip"><span class="file-dot" style="background:#c9a84c"></span>registration.php</span>
+    <span class="file-chip"><span class="file-dot" style="background:#c9a84c"></span>login.php</span>
+    <span class="file-chip"><span class="file-dot" style="background:#7b2d3e"></span>header.php</span>
+    <span class="file-chip"><span class="file-dot" style="background:#2d6a4f"></span>main.php</span>
+    <span class="file-chip"><span class="file-dot" style="background:#2d6a4f"></span>add_book.php</span>
+    <span class="file-chip"><span class="file-dot" style="background:#2d6a4f"></span>manage_books.php</span>
+    <span class="file-chip"><span class="file-dot" style="background:#2d6a4f"></span>edit_book.php</span>
+    <span class="file-chip"><span class="file-dot" style="background:#2d6a4f"></span>delete_book.php</span>
+    <span class="file-chip"><span class="file-dot" style="background:#888"></span>user.txt</span>
+    <span class="file-chip"><span class="file-dot" style="background:#888"></span>books_info.txt</span>
+  </div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">user.txt — data format</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">ব্যবহারকারীর data যেভাবে থাকে</span>
+  </div>
+  <div class="data-card">
+    <div class="data-card-title">প্রতিটি line = একজন user &nbsp;·&nbsp; Each line = one user</div>
+    <div class="data-row">
+      <span class="data-key">ID</span><span class="data-sep">|</span><span class="data-key">Name</span><span class="data-sep">|</span><span class="data-key">Email</span><span class="data-sep">|</span><span class="data-key">Password</span><span class="data-sep">|</span><span class="data-key">Address</span><span class="data-sep">|</span><span class="data-key">Contact</span><span class="data-sep">|</span><span class="data-key">Username</span>
+    </div>
+    <div class="data-row">
+      <span class="data-val">1295328</span><span class="data-sep">|</span><span class="data-val">Hasibul Polok</span><span class="data-sep">|</span><span class="data-val">email@gmail.com</span><span class="data-sep">|</span><span class="data-val">pass123</span><span class="data-sep">|</span><span class="data-val">Dhaka</span><span class="data-sep">|</span><span class="data-val">01644250533</span><span class="data-sep">|</span><span class="data-val">tanjil722</span>
+    </div>
+  </div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">books_info.txt — data format</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">বইয়ের data যেভাবে থাকে</span>
+  </div>
+  <div class="data-card">
+    <div class="data-card-title">প্রতিটি line = একটি book &nbsp;·&nbsp; Each line = one book</div>
+    <div class="data-row">
+      <span class="data-key">ID</span><span class="data-sep">|</span><span class="data-key">Title</span><span class="data-sep">|</span><span class="data-key">Author</span><span class="data-sep">|</span><span class="data-key">Year</span><span class="data-sep">|</span><span class="data-key">Description</span><span class="data-sep">|</span><span class="data-key">CoverPath</span>
+    </div>
+    <div class="data-row">
+      <span class="data-val">B001</span><span class="data-sep">|</span><span class="data-val">Harry Potter</span><span class="data-sep">|</span><span class="data-val">J.K. Rowling</span><span class="data-sep">|</span><span class="data-val">1997</span><span class="data-sep">|</span><span class="data-val">Magic story</span><span class="data-sep">|</span><span class="data-val">covers/123_hp.jpg</span>
+    </div>
+  </div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">App flow</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">App কীভাবে চলে</span>
+  </div>
+  <div class="flow-row">
+    <div class="flow-box hi">registration.php</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">user.txt এ save</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box hi">login.php</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">Session শুরু</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box hi">main.php</div>
+  </div>
+  <div style="height:10px"></div>
+  <div class="flow-row">
+    <div class="flow-box hi">main.php</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">add_book</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">books_info.txt</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">edit / delete</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box hi">logout.php</div>
+  </div>
+</div>
+
+<!-- ══════════════ STEP 1: STYLE ══════════════ -->
+<div class="section" id="s-style">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div class="step-title">style.php — Shared design system</div>
+  </div>
+  <p class="step-sub">সব পেজে একবার include করা হয় · Included in every page for consistent styling</p>
+
+  <div class="info-box">
+    <strong>কেন আলাদা file রাখা হয়েছে? / Why a separate file?</strong><br>
+    প্রতিটি .php file এ আলাদাভাবে CSS লিখলে পরে কোনো রঙ বা style বদলাতে হলে অনেক জায়গায় বদলাতে হবে।
+    <code>style.php</code> এ সব CSS variable এক জায়গায় রাখলে শুধু একবার বদলালেই সব পেজে apply হয়।<br><br>
+    <em>If CSS were duplicated in every file, changing a color would require editing everywhere. By keeping one <code>style.php</code>, one change applies everywhere instantly.</em>
+  </div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">CSS variables</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">রঙ ও style এর variable define করা</span>
+  </div>
+  <div class="code-block"><span class="kw">:root</span> {
+  <span class="hl">--burgundy</span>: #6b2737;   <span class="cmt">/* প্রধান রঙ — main color */</span>
+  <span class="hl">--gold</span>:     #c9a84c;   <span class="cmt">/* accent রঙ — accent color */</span>
+  <span class="hl">--bg</span>:       #f4f1eb;   <span class="cmt">/* page background */</span>
+  <span class="hl">--ink</span>:      #1a1a2e;   <span class="cmt">/* text রঙ — text color */</span>
+  <span class="hl">--muted</span>:    #7a7060;   <span class="cmt">/* secondary text */</span>
+  <span class="hl">--border</span>:   #e0d9cc;   <span class="cmt">/* border রঙ */</span>
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Reusable button class</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">সব পেজে ব্যবহারযোগ্য button style</span>
+  </div>
+  <div class="code-block"><span class="kw">.btn-primary</span> {
+  background: <span class="hl">var(--burgundy)</span>; <span class="cmt">/* variable use — একবার বদলালে সব বদলায় */</span>
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+<span class="kw">.btn-primary:hover</span> {
+  background: <span class="hl">var(--burgundy-light)</span>; <span class="cmt">/* hover effect */</span>
+  transform: translateY(-1px); <span class="cmt">/* সামান্য উপরে উঠে — slight lift */</span>
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">How to use in other files</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">অন্য file এ কীভাবে include করতে হয়</span>
+  </div>
+  <div class="code-block">&lt;?php <span class="fn">include</span> <span class="str">'style.php'</span>; ?&gt;
+<span class="cmt">&lt;!-- এরপর সরাসরি class use করা যাবে / Now you can use the classes directly --&gt;</span>
+&lt;button <span class="hl">class="btn-primary"</span>&gt;Submit&lt;/button&gt;</div>
+</div>
+
+<!-- ══════════════ STEP 2: REGISTER ══════════════ -->
+<div class="section" id="s-register">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div class="step-title">registration.php — User registration</div>
+  </div>
+  <p class="step-sub">নতুন user এর তথ্য নিয়ে validate করে <code>user.txt</code> এ save করা হয় · Validates and saves new user data to a text file</p>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Step 1 — Capture form data</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Form submit হলে data ধরা</span>
+  </div>
+  <div class="code-block"><span class="kw">if</span>(<span class="fn">isset</span>($_POST[<span class="str">'register'</span>])) {
+  <span class="cmt">// POST এ আসা data trim করে নেওয়া (extra space বাদ দেওয়া)
+  // trim() removes leading/trailing whitespace from input</span>
+  $id        = <span class="fn">trim</span>($_POST[<span class="str">'id'</span>]);
+  $name      = <span class="fn">trim</span>($_POST[<span class="str">'name'</span>]);
+  $email     = <span class="fn">trim</span>($_POST[<span class="str">'email'</span>]);
+  $password  = <span class="fn">trim</span>($_POST[<span class="str">'password'</span>]);
+  $confirm   = <span class="fn">trim</span>($_POST[<span class="str">'confirm_password'</span>]);
+  $user_name = <span class="fn">trim</span>($_POST[<span class="str">'user_name'</span>]);
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Step 2 — Validation</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Email ও password সঠিক কিনা চেক করা</span>
+  </div>
+  <div class="code-block"><span class="cmt">// Email format সঠিক কিনা regex দিয়ে চেক / Check email with regex</span>
+$email_pattern = <span class="str">"/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/"</span>;
+
+<span class="cmt">// Password: min 8 char, অন্তত 1 letter + 1 number
+// At least 8 characters, 1 letter + 1 digit required</span>
+$pass_pattern = <span class="str">"/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/"</span>;
+
+<span class="kw">if</span>(!<span class="fn">preg_match</span>($email_pattern, $email)) {
+  $msg = <span class="str">'Invalid email!'</span>;
+} <span class="kw">elseif</span>(!<span class="fn">preg_match</span>($pass_pattern, $password)) {
+  $msg = <span class="str">'Password too weak!'</span>;
+} <span class="kw">elseif</span>($password !== $confirm) {
+  $msg = <span class="str">'Passwords do not match!'</span>;
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Step 3 — Duplicate check</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">একই username আগে নেওয়া হয়েছে কিনা চেক</span>
+  </div>
+  <div class="code-block">$user_file = <span class="hl">__DIR__</span> . <span class="str">"/user.txt"</span>; <span class="cmt">// __DIR__ = এই file এর ঠিক folder / this file's directory</span>
+<span class="kw">if</span>(<span class="fn">file_exists</span>($user_file)) {
+  $existing = <span class="fn">file</span>($user_file, FILE_IGNORE_NEW_LINES);
+  <span class="kw">foreach</span>($existing <span class="kw">as</span> $line) {
+    $parts = <span class="fn">explode</span>(<span class="str">"|"</span>, $line);
+    <span class="kw">if</span>($parts[6] === $user_name) { <span class="cmt">// index 6 = username</span>
+      $msg = <span class="str">'Username already taken!'</span>;
+      <span class="kw">break</span>; <span class="cmt">// পাওয়া গেলে loop থামিয়ে দাও / stop loop if found</span>
+    }
+  }
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Step 4 — Save to user.txt</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">user.txt ফাইলে data লেখা</span>
+  </div>
+  <div class="code-block"><span class="cmt">// সব field pipe (|) দিয়ে জোড়া লাগিয়ে একটি line তৈরি
+// Join all fields with | into one line</span>
+$data = $id.<span class="str">"|"</span>.$name.<span class="str">"|"</span>.$email.<span class="str">"|"</span>
+      .$password.<span class="str">"|"</span>.$address.<span class="str">"|"</span>
+      .$contact.<span class="str">"|"</span>.$user_name.<span class="hl">PHP_EOL</span>; <span class="cmt">// নতুন line</span>
+
+$file = <span class="fn">fopen</span>($user_file, <span class="str">"a"</span>); <span class="cmt">// "a" = append mode — পুরনো data রাখে</span>
+<span class="fn">fwrite</span>($file, $data);
+<span class="fn">fclose</span>($file);
+
+<span class="cmt">// 2 সেকেন্ড পর login page এ পাঠিয়ে দাও / Redirect to login after 2s</span>
+<span class="kw">echo</span> <span class="str">'&lt;meta http-equiv="refresh" content="2;url=login.php"&gt;'</span>;</div>
+</div>
+
+<!-- ══════════════ STEP 3: LOGIN ══════════════ -->
+<div class="section" id="s-login">
+  <div class="step-header">
+    <div class="step-num">3</div>
+    <div class="step-title">login.php — Session-based authentication</div>
+  </div>
+  <p class="step-sub">user.txt পড়ে username + password মিলিয়ে session শুরু করা হয় · Reads user.txt, matches credentials, and starts a session</p>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Session start at top of page</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Page এর একদম শুরুতে session চালু করা</span>
+  </div>
+  <div class="code-block"><span class="cmt">// session_status() চেক — already started কিনা দেখা
+// Avoid starting session twice</span>
+<span class="kw">if</span>(<span class="fn">session_status</span>() === PHP_SESSION_NONE) {
+  <span class="fn">session_start</span>();
+}
+
+<span class="cmt">// আগে থেকে logged in থাকলে সরাসরি main page এ পাঠিয়ে দাও
+// If already logged in, skip login page entirely</span>
+<span class="kw">if</span>(<span class="fn">isset</span>($_SESSION[<span class="str">'user_name'</span>])) {
+  <span class="fn">header</span>(<span class="str">"location:main.php"</span>);
+  <span class="fn">exit</span>();
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Login logic — match user from file</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">user.txt থেকে username ও password মেলানো</span>
+  </div>
+  <div class="code-block">$user_file = <span class="hl">__DIR__</span> . <span class="str">"/user.txt"</span>;
+<span class="kw">if</span>(<span class="fn">file_exists</span>($user_file)) {
+  <span class="cmt">// সব line array তে লোড করা / Load all lines into array</span>
+  $lines = <span class="fn">file</span>($user_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+  <span class="kw">foreach</span>($lines <span class="kw">as</span> $line) {
+    $parts = <span class="fn">explode</span>(<span class="str">"|"</span>, $line);
+    <span class="kw">if</span>(<span class="fn">count</span>($parts) < 7) <span class="kw">continue</span>; <span class="cmt">// ভাঙা line skip করা</span>
+
+    <span class="cmt">// parts[6]=username, parts[3]=password</span>
+    <span class="kw">if</span>($parts[6] === $input_user && $parts[3] === $input_pass) {
+      $_SESSION[<span class="str">"user_name"</span>] = $parts[6];
+      $_SESSION[<span class="str">"full_name"</span>]  = $parts[1]; <span class="cmt">// header এ নাম দেখাবে</span>
+      <span class="fn">header</span>(<span class="str">"location:main.php"</span>);
+      <span class="fn">exit</span>();
+    }
+  }
+}
+$error = <span class="str">'Invalid username or password.'</span>;</div>
+
+  <div class="info-box">
+    <strong>Session কীভাবে কাজ করে? / How does a session work?</strong><br>
+    Login সফল হলে server এ একটি session file তৈরি হয় এবং browser এ একটি cookie পাঠানো হয়।
+    পরের প্রতিটি request এ browser সেই cookie পাঠায়, server session file থেকে user চেনে। Logout করলে session destroy হয়ে যায়।<br><br>
+    <em>On successful login, PHP creates a session file on the server and sends a cookie to the browser. On every subsequent request, the browser sends the cookie back, and the server identifies the user from the session. Logout destroys the session.</em>
+  </div>
+</div>
+
+<!-- ══════════════ STEP 4: HEADER ══════════════ -->
+<div class="section" id="s-header">
+  <div class="step-header">
+    <div class="step-num">4</div>
+    <div class="step-title">header.php — Shared navigation bar</div>
+  </div>
+  <p class="step-sub">সব protected page এর শুরুতে require_once করা হয় · Included at the top of every protected page</p>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Session check + include header</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Login আছে কিনা চেক করে header আনা</span>
+  </div>
+  <div class="code-block"><span class="cmt">// main.php / add_book.php / manage_books.php সবখানে এভাবে শুরু হয়
+// All protected pages start with this pattern</span>
+<span class="fn">session_start</span>();
+<span class="kw">if</span>(!<span class="fn">isset</span>($_SESSION[<span class="str">"user_name"</span>])) {
+  <span class="fn">header</span>(<span class="str">"location:login.php"</span>); <span class="cmt">// login না থাকলে redirect করো</span>
+  <span class="fn">exit</span>(); <span class="cmt">// header() এর পর exit() দেওয়া জরুরি / always exit after redirect</span>
+}
+
+$page_title = <span class="str">"Library — Polok's Book Collection"</span>;
+<span class="fn">require_once</span>(<span class="str">"header.php"</span>); <span class="cmt">// এখান থেকে HTML শুরু হবে / HTML starts here</span></div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Show user name from session</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Navbar এ user এর নাম দেখানো</span>
+  </div>
+  <div class="code-block"><span class="cmt">&lt;!-- Navbar এর ভেতরে / Inside the navbar --&gt;</span>
+&lt;?<span class="kw">php if</span>(<span class="fn">isset</span>($_SESSION[<span class="str">'full_name'</span>])): ?&gt;
+  &lt;li class="nav-user"&gt;
+    Hi, &lt;strong&gt;
+      &lt;?= <span class="fn">htmlspecialchars</span>($_SESSION[<span class="str">'full_name'</span>]) ?&gt;
+      <span class="cmt">&lt;!-- htmlspecialchars() XSS attack থেকে রক্ষা করে / Prevents XSS --&gt;</span>
+    &lt;/strong&gt;
+  &lt;/li&gt;
+&lt;?php <span class="kw">endif</span>; ?&gt;</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Search form — GET method</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Search করলে URL এ query যায়</span>
+  </div>
+  <div class="code-block">&lt;form action=<span class="str">"main.php"</span> method=<span class="str">"GET"</span>&gt;
+  &lt;input type=<span class="str">"search"</span> name=<span class="str">"search"</span>
+    value=<span class="str">"&lt;?= htmlspecialchars($_GET['search'] ?? '') ?&gt;"</span>&gt;
+  &lt;button type=<span class="str">"submit"</span>&gt;Search&lt;/button&gt;
+&lt;/form&gt;
+<span class="cmt">&lt;!-- main.php এ: ?search=harry → $_GET['search'] = 'harry'
+     URL example: main.php?search=harry --&gt;</span></div>
+</div>
+
+<!-- ══════════════ STEP 5: ADD BOOK ══════════════ -->
+<div class="section" id="s-addbook">
+  <div class="step-header">
+    <div class="step-num">5</div>
+    <div class="step-title">add_book.php — Adding a book</div>
+  </div>
+  <p class="step-sub">Form এ তথ্য নিয়ে cover image upload করে <code>books_info.txt</code> এ append করা হয় · Takes form input, uploads cover image, appends data to text file</p>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Image upload — validation + move</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Cover image আপলোড করার আগে যাচাই করা</span>
+  </div>
+  <div class="code-block">$cover_path = <span class="str">''</span>; <span class="cmt">// default: কোনো image নেই / no image by default</span>
+
+<span class="kw">if</span>(!<span class="fn">empty</span>($_FILES[<span class="str">'cover_file'</span>][<span class="str">'name'</span>])) {
+  $type = <span class="fn">strtolower</span>(<span class="fn">pathinfo</span>($_FILES[<span class="str">'cover_file'</span>][<span class="str">'name'</span>],
+          PATHINFO_EXTENSION)); <span class="cmt">// file extension বের করা</span>
+  $allowed  = [<span class="str">'jpg'</span>, <span class="str">'jpeg'</span>, <span class="str">'png'</span>, <span class="str">'webp'</span>];
+  $max_size = 3 * 1024 * 1024; <span class="cmt">// 3MB সীমা / 3MB limit</span>
+
+  <span class="kw">if</span>(!<span class="fn">in_array</span>($type, $allowed)) {
+    $msg = <span class="str">'Only JPG, PNG, WEBP allowed!'</span>;
+  } <span class="kw">elseif</span>($_FILES[<span class="str">'cover_file'</span>][<span class="str">'size'</span>] > $max_size) {
+    $msg = <span class="str">'Max size 3MB!'</span>;
+  } <span class="kw">else</span> {
+    <span class="cmt">// unique filename: time() যোগ করলে same name conflict হয় না
+    // Prepend timestamp so filenames never clash</span>
+    $cover_path = <span class="str">"covers/"</span> . <span class="fn">time</span>() . <span class="str">"_"</span> .
+                  <span class="fn">basename</span>($_FILES[<span class="str">'cover_file'</span>][<span class="str">'name'</span>]);
+    <span class="fn">move_uploaded_file</span>(
+      $_FILES[<span class="str">'cover_file'</span>][<span class="str">'tmp_name'</span>], <span class="cmt">// temp এ থাকে প্রথমে</span>
+      $cover_path                             <span class="cmt">// সরাসরি covers/ এ নিয়ে যাও</span>
+    );
+  }
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Save to books_info.txt</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">বইয়ের data file এ লেখা</span>
+  </div>
+  <div class="code-block"><span class="cmt">// description এ | বা newline থাকলে parse ভাঙে — তাই বাদ দাও
+// Remove | and newlines from description to avoid parse errors</span>
+$desc = <span class="fn">str_replace</span>([<span class="str">'|'</span>, <span class="str">"\n"</span>, <span class="str">"\r"</span>], [<span class="str">' '</span>, <span class="str">' '</span>, <span class="str">''</span>], $description);
+
+$data = <span class="str">"$id|$title|$author|$year|$desc|$cover_path"</span> . PHP_EOL;
+
+<span class="cmt">// FILE_APPEND = পুরনো data না মুছে শেষে যোগ করো
+// Appends to file without erasing existing data</span>
+<span class="fn">file_put_contents</span>(__DIR__ . <span class="str">"/books_info.txt"</span>, $data,
+                  <span class="hl">FILE_APPEND</span>);</div>
+</div>
+
+<!-- ══════════════ STEP 6: LIBRARY ══════════════ -->
+<div class="section" id="s-library">
+  <div class="step-header">
+    <div class="step-num">6</div>
+    <div class="step-title">main.php — Library display & search</div>
+  </div>
+  <p class="step-sub">books_info.txt পড়ে সব book card এ দেখানো হয়। Hover করলে card flip হয়ে description দেখায় · Reads file and renders book cards with a CSS flip effect</p>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Read and parse books_info.txt</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">File থেকে বইয়ের data পড়া ও parse করা</span>
+  </div>
+  <div class="code-block">$file_path = <span class="hl">__DIR__</span> . <span class="str">"/books_info.txt"</span>;
+$books = [];
+
+<span class="kw">if</span>(<span class="fn">file_exists</span>($file_path)) {
+  <span class="cmt">// প্রতিটি line array তে, খালি line skip করা
+  // Each line → array element; empty lines skipped</span>
+  $lines = <span class="fn">file</span>($file_path,
+           FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+  <span class="kw">foreach</span>($lines <span class="kw">as</span> $line) {
+    $d = <span class="fn">explode</span>(<span class="str">"|"</span>, <span class="fn">trim</span>($line));
+    <span class="kw">if</span>(<span class="fn">count</span>($d) < 5) <span class="kw">continue</span>; <span class="cmt">// ভাঙা line skip</span>
+
+    <span class="cmt">// cover_path না থাকলে empty string add করো</span>
+    <span class="kw">while</span>(<span class="fn">count</span>($d) < 6) $d[] = <span class="str">''</span>;
+    $books[] = $d;
+  }
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Render book cards in PHP loop</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Loop দিয়ে প্রতিটি book card তৈরি করা</span>
+  </div>
+  <div class="code-block">&lt;?php <span class="kw">foreach</span>($books <span class="kw">as</span> $b): ?&gt;
+  &lt;div class="book-card"&gt;
+    &lt;div class="book-inner"&gt;
+
+      &lt;!-- সামনের দিক: cover + title / Front: cover + title --&gt;
+      &lt;div class="book-front"&gt;
+        &lt;?php <span class="kw">if</span>(!<span class="fn">empty</span>($b[5]) && <span class="fn">file_exists</span>($b[5])): ?&gt;
+          &lt;img src="&lt;?= <span class="fn">htmlspecialchars</span>($b[5]) ?&gt;"&gt;
+        &lt;?php <span class="kw">else</span>: ?&gt;
+          &lt;div class="placeholder"&gt;📕&lt;/div&gt; <span class="cmt">&lt;!-- no cover fallback --&gt;</span>
+        &lt;?php <span class="kw">endif</span>; ?&gt;
+        &lt;div&gt;&lt;?= <span class="fn">htmlspecialchars</span>($b[1]) ?&gt;&lt;/div&gt; <span class="cmt">&lt;!-- title --&gt;</span>
+        &lt;div&gt;by &lt;?= <span class="fn">htmlspecialchars</span>($b[2]) ?&gt;&lt;/div&gt; <span class="cmt">&lt;!-- author --&gt;</span>
+      &lt;/div&gt;
+
+      &lt;!-- পেছনের দিক: description — hover এ দেখায় / Back: shows on hover --&gt;
+      &lt;div class="book-back"&gt;
+        &lt;?= <span class="fn">htmlspecialchars</span>($b[4]) ?&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;?php <span class="kw">endforeach</span>; ?&gt;</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">CSS-only card flip (no JS needed!)</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Hover করলে card উল্টো হয় — শুধু CSS দিয়ে</span>
+  </div>
+  <div class="code-block"><span class="kw">.book-card:hover .book-inner</span> {
+  transform: <span class="hl">rotateY(180deg)</span>; <span class="cmt">/* hover এ flip / flip on hover */</span>
+}
+<span class="kw">.book-back</span> {
+  transform: <span class="hl">rotateY(180deg)</span>; <span class="cmt">/* already flipped — visible after parent flips */</span>
+  backface-visibility: hidden;  <span class="cmt">/* সামনে থাকলে দেখা যাবে না / hidden when facing away */</span>
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">Search — filter via GET query</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">URL এর search query দিয়ে বই filter করা</span>
+  </div>
+  <div class="code-block">&lt;?php <span class="kw">if</span>(<span class="fn">isset</span>($_GET[<span class="str">'search'</span>]) && !<span class="fn">empty</span>($_GET[<span class="str">'search'</span>])): ?&gt;
+&lt;?php
+  $q = <span class="fn">trim</span>($_GET[<span class="str">'search'</span>]);
+  $results = [];
+  $lines = <span class="fn">file</span>(<span class="str">"books_info.txt"</span>, FILE_IGNORE_NEW_LINES);
+
+  <span class="kw">foreach</span>($lines <span class="kw">as</span> $line) {
+    $d = <span class="fn">explode</span>(<span class="str">"|"</span>, $line);
+    <span class="cmt">// title ($d[1]) বা author ($d[2]) এ search করা / Search title or author</span>
+    <span class="kw">if</span>(<span class="fn">stripos</span>($d[1], $q) !== false ||   <span class="cmt">// stripos = case-insensitive search</span>
+       <span class="fn">stripos</span>($d[2], $q) !== false) {
+      $results[] = $d;
+    }
+  }
+?&gt;</div>
+</div>
+
+<!-- ══════════════ STEP 7: MANAGE ══════════════ -->
+<div class="section" id="s-manage">
+  <div class="step-header">
+    <div class="step-num">7</div>
+    <div class="step-title">manage / edit / delete — CRUD operations</div>
+  </div>
+  <p class="step-sub">Book এর তথ্য update ও delete করা। File এর নির্দিষ্ট line খুঁজে বদলানো বা বাদ দেওয়া হয় · Update and delete books by rewriting specific lines in the text file</p>
+
+  <div class="bilabel">
+    <span class="bilabel-en">edit_book.php — update a specific line</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">নির্দিষ্ট book এর line খুঁজে update করা</span>
+  </div>
+  <div class="code-block"><span class="cmt">// URL এ ?id=B001 দিয়ে আসে / Book ID comes from URL query string</span>
+$id = $_GET[<span class="str">'id'</span>] ?? <span class="str">''</span>;
+$file_path = __DIR__ . <span class="str">"/books_info.txt"</span>;
+$lines = <span class="fn">file</span>($file_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+<span class="kw">if</span>(<span class="fn">isset</span>($_POST[<span class="str">'update_book'</span>])) {
+  $updated = [];
+  <span class="kw">foreach</span>($lines <span class="kw">as</span> $line) {
+    $d = <span class="fn">explode</span>(<span class="str">"|"</span>, $line);
+
+    <span class="kw">if</span>($d[0] == $id) {
+      <span class="cmt">// এই line টা নতুন data দিয়ে replace করা / Replace matching line</span>
+      $updated[] = <span class="str">"$new_id|$new_title|$new_author|..."</span>;
+    } <span class="kw">else</span> {
+      $updated[] = $line; <span class="cmt">// বাকিগুলো হুবহু রেখে দাও / Keep others unchanged</span>
+    }
+  }
+  <span class="cmt">// পুরো file নতুনভাবে লেখা / Rewrite the entire file</span>
+  <span class="fn">file_put_contents</span>($file_path,
+    <span class="fn">implode</span>(PHP_EOL, $updated) . PHP_EOL);
+}</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">delete_book.php — remove a line</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">নির্দিষ্ট book এর line বাদ দেওয়া</span>
+  </div>
+  <div class="code-block">$delete_id = $_GET[<span class="str">'id'</span>];
+$lines = <span class="fn">file</span>($file_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$new_data = [];
+
+<span class="kw">foreach</span>($lines <span class="kw">as</span> $line) {
+  $d = <span class="fn">explode</span>(<span class="str">"|"</span>, $line);
+  <span class="kw">if</span>($d[0] != $delete_id) {
+    $new_data[] = $line; <span class="cmt">// এটা রাখো / keep it</span>
+  } <span class="kw">else</span> {
+    <span class="cmt">// cover image file টাও মুছে দাও / Delete cover image too</span>
+    <span class="kw">if</span>(!<span class="fn">empty</span>($d[5]) && <span class="fn">file_exists</span>($d[5]))
+      <span class="fn">unlink</span>($d[5]);
+  }
+}
+
+$content = <span class="fn">empty</span>($new_data) ? <span class="str">''</span>
+         : <span class="fn">implode</span>(PHP_EOL, $new_data) . PHP_EOL;
+<span class="fn">file_put_contents</span>($file_path, $content);</div>
+
+  <div class="bilabel">
+    <span class="bilabel-en">logout.php — destroy session</span>
+    <span class="bilabel-divider">/</span>
+    <span class="bilabel-bn">Session মুছে দিয়ে logout করা</span>
+  </div>
+  <div class="code-block"><span class="fn">session_start</span>();
+<span class="fn">session_destroy</span>(); <span class="cmt">// সব session data মুছে দাও / Erase all session data</span>
+<span class="fn">header</span>(<span class="str">"location:login.php"</span>);
+<span class="fn">exit</span>();</div>
+</div>
+
+<!-- ══════════════ STEP 8: BUGS ══════════════ -->
+<div class="section" id="s-bugs">
+  <div class="step-header">
+    <div class="step-num">🐛</div>
+    <div class="step-title">Bugs Fixed — কী ভুল ছিল, কীভাবে ঠিক হলো</div>
+  </div>
+  <p class="step-sub">আগের version এ ৬টি bug ছিল · The previous version had 6 bugs — here's each one explained</p>
+
+  <!-- BUG 1 -->
+  <div class="bug-entry">
+    <div class="bug-num">
+      <span class="bug-badge">BUG 1</span>
+      <span class="bug-title">Relative file path — সব ফাইলে</span>
+    </div>
+    <div class="warn-box">
+      <strong>সমস্যা / Problem:</strong><br>
+      <code>fopen("user.txt")</code> লেখা ছিল। এটি server এর current working directory তে file খোঁজে, যা project folder থেকে আলাদা হতে পারে। ফলে file পাওয়া যেত না।<br><br>
+      <em><code>fopen("user.txt")</code> looks in the server's current working directory, which may not be the project folder — causing the file to go missing.</em>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card bad">
+        <span class="badge badge-bad">❌ ভুল / Wrong</span>
+        <div class="code-block"><span class="fn">fopen</span>(<span class="str">"user.txt"</span>, <span class="str">"a"</span>)</div>
+      </div>
+      <div class="compare-card good">
+        <span class="badge badge-good">✅ সঠিক / Correct</span>
+        <div class="code-block"><span class="fn">fopen</span>(<span class="hl">__DIR__</span> . <span class="str">"/user.txt"</span>, <span class="str">"a"</span>)</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BUG 2 -->
+  <div class="bug-entry">
+    <div class="bug-num">
+      <span class="bug-badge">BUG 2</span>
+      <span class="bug-title">Duplicate user check ছিল না</span>
+    </div>
+    <div class="warn-box">
+      <strong>সমস্যা / Problem:</strong><br>
+      Same username বা ID দিয়ে বারবার register করা যাচ্ছিল। Login এ wrong user match হওয়ার সম্ভাবনা ছিল।<br><br>
+      <em>Users could register multiple times with the same username or ID, potentially causing wrong login matches.</em>
+    </div>
+    <div class="fix-box">
+      <strong>সমাধান / Fix:</strong><br>
+      Registration এর আগে <code>user.txt</code> এর সব line পড়ে check করা হয় — same ID, username বা email পাওয়া গেলে error দেওয়া হয় এবং save হয় না।<br><br>
+      <em>Before saving, all existing lines are checked. If the same ID, username, or email is found, registration is blocked with an error.</em>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BUG 3 -->
+  <div class="bug-entry">
+    <div class="bug-num">
+      <span class="bug-badge">BUG 3</span>
+      <span class="bug-title">Already logged in redirect নেই</span>
+    </div>
+    <div class="warn-box">
+      <strong>সমস্যা / Problem:</strong><br>
+      Login থাকা অবস্থায় <code>login.php</code> এ গেলে আবার form দেখাচ্ছিল — এটি confusing ও unnecessary।<br><br>
+      <em>Visiting login.php while already logged in showed the login form again — confusing UX.</em>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card bad">
+        <span class="badge badge-bad">❌ ভুল / Wrong</span>
+        <div class="code-block"><span class="cmt">// কোনো check ছিল না</span>
+<span class="fn">session_start</span>();
+<span class="cmt">// form directly shown</span></div>
+      </div>
+      <div class="compare-card good">
+        <span class="badge badge-good">✅ সঠিক / Correct</span>
+        <div class="code-block"><span class="fn">session_start</span>();
+<span class="kw">if</span>(<span class="fn">isset</span>($_SESSION[<span class="str">'user_name'</span>])){
+  header(<span class="str">"location:main.php"</span>);
+  exit();
+}</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BUG 4 -->
+  <div class="bug-entry">
+    <div class="bug-num">
+      <span class="bug-badge">BUG 4</span>
+      <span class="bug-title">Session check ভুল — header.php</span>
+    </div>
+    <div class="warn-box">
+      <strong>সমস্যা / Problem:</strong><br>
+      <code>if(!isset($_SESSION))</code> — PHP তে <code>$_SESSION</code> সবসময় defined থাকে, তাই এই condition কখনো true হয় না। Session কখনো properly start হচ্ছিল না।<br><br>
+      <em>In PHP, <code>$_SESSION</code> is always defined, so <code>!isset($_SESSION)</code> is never true — the session was never being started correctly.</em>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card bad">
+        <span class="badge badge-bad">❌ ভুল / Wrong</span>
+        <div class="code-block"><span class="kw">if</span>(!<span class="fn">isset</span>($_SESSION))
+  session_start(); <span class="cmt">// never runs!</span></div>
+      </div>
+      <div class="compare-card good">
+        <span class="badge badge-good">✅ সঠিক / Correct</span>
+        <div class="code-block"><span class="kw">if</span>(session_status()
+  === PHP_SESSION_NONE)
+  session_start();</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BUG 5 -->
+  <div class="bug-entry">
+    <div class="bug-num">
+      <span class="bug-badge">BUG 5</span>
+      <span class="bug-title">empty check logic ভুল — manage_books.php</span>
+    </div>
+    <div class="warn-box">
+      <strong>সমস্যা / Problem:</strong><br>
+      <code>empty($lines)</code> চেক করার পরেও নিচের <code>foreach</code> loop চলছিল। দুটো আলাদা <code>if</code> block এ ছিল না বলে এটি হচ্ছিল।<br><br>
+      <em>The <code>foreach</code> ran even when <code>$lines</code> was empty, because the empty check and the loop weren't in an if/else structure.</em>
+    </div>
+    <div class="fix-box">
+      <strong>সমাধান / Fix:</strong><br>
+      <code>if(empty($lines)){...} else { foreach... }</code> — এইভাবে if/else দিয়ে ঠিক করা হয়েছে। এখন empty হলে foreach কখনো চলে না।<br><br>
+      <em>Wrapping in if/else ensures the <code>foreach</code> only runs when data exists.</em>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BUG 6 -->
+  <div class="bug-entry">
+    <div class="bug-num">
+      <span class="bug-badge">BUG 6</span>
+      <span class="bug-title">Trailing empty line জমছিল — delete/edit এ</span>
+    </div>
+    <div class="warn-box">
+      <strong>সমস্যা / Problem:</strong><br>
+      বারবার edit বা delete করলে <code>books_info.txt</code> এ ফাঁকা line জমে যাচ্ছিল। Empty array হলেও <code>"\n"</code> লেখা হচ্ছিল, যা parse করতে গিয়ে extra empty entry তৈরি করছিল।<br><br>
+      <em>After repeated edits/deletes, blank lines accumulated in the file. Even empty data was written as a newline, creating phantom empty entries on the next parse.</em>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card bad">
+        <span class="badge badge-bad">❌ ভুল / Wrong</span>
+        <div class="code-block">file_put_contents($path,
+  implode(PHP_EOL,$data).PHP_EOL);
+<span class="cmt">// empty array হলেও "\n" লেখে</span></div>
+      </div>
+      <div class="compare-card good">
+        <span class="badge badge-good">✅ সঠিক / Correct</span>
+        <div class="code-block">$content = <span class="fn">empty</span>($data) ? <span class="str">''</span>
+  : implode(PHP_EOL,$data).PHP_EOL;
+file_put_contents($path, $content);</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /s-bugs -->
+
+</div><!-- /content -->
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  document.getElementById('s-' + id).classList.add('visible');
+  const map = {overview:0,style:1,register:2,login:3,header:4,addbook:5,library:6,manage:7,bugs:8};
+  const pills = document.querySelectorAll('.pill');
+  if (map[id] !== undefined) pills[map[id]].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
